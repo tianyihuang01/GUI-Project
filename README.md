@@ -1,2 +1,2 @@
 # GUI-Project
-A desktop app to collect GUI from Android emulators
+GUI Labbeller - a desktop app to collect and label android GUIs.
