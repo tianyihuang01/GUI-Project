@@ -37,7 +37,7 @@ class Labeller(QDialog):
         self.button_location_o = QPushButton('Open location')
         # self.button_location_o.setFixedWidth(fm.boundingRect(text).width() + 6)
 
-        self.button_save = QPushButton('Get n Save')
+        self.button_save = QPushButton('*Get n Save*')
 
         self.label_issue = QLabel('login issue? ')
         self.button_tag_phone = QPushButton('phone')
