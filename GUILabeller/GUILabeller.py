@@ -109,7 +109,7 @@ class Labeller(QDialog):
         cmd = str()
         if len(dev) == 1:
             cmd = 'adb shell dumpsys window windows | find "mCurrentFocus"'
-        elif len(dev) == 2:
+        elif len(dev) >= 2:
             if number == 1:
                 cmd = 'adb -s ' + dev[0] + ' shell dumpsys window windows | find "mCurrentFocus"'
                 print(cmd)
