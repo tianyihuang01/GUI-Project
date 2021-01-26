@@ -8,7 +8,8 @@ import subprocess
 
 dev = []
 # save_dir = ""
-package_name = ""
+package_name = []
+activity_name = []
 save_file = ""
 
 
@@ -24,10 +25,13 @@ class Labeller(QDialog):
         # self.edit_check_result = QLineEdit('...')
         # self.edit_check_result.setReadOnly(True)
 
-        self.button_package_1 = QPushButton('2. Check Name 1')
+        self.label_emulator_1 = QLabel('Emulator 1')
+        self.label_emulator_2 = QLabel('Emulator 2')
+
+        self.button_package_1 = QPushButton('2. Check Packages: ')
         self.edit_package_1_result = QLineEdit('...')
         self.edit_package_1_result.setReadOnly(True)
-        self.button_package_2 = QPushButton('3. Check Name 2')
+        # self.button_package_2 = QPushButton('3. Check Name 2')
         self.edit_package_2_result = QLineEdit('...')
         self.edit_package_2_result.setReadOnly(True)
 
@@ -38,6 +42,15 @@ class Labeller(QDialog):
         # self.button_location_o.setFixedWidth(fm.boundingRect(text).width() + 6)
 
         self.button_save = QPushButton('*Get n Save*')
+        self.label_activity_1 = QLabel('activity name 1: ')
+        self.label_activity_2 = QLabel('activity name 2: ')
+
+        self.edit_activity_1_result = QLineEdit('...')
+        self.edit_activity_1_result.setReadOnly(True)
+        self.edit_activity_2_result = QLineEdit('...')
+        self.edit_activity_2_result.setReadOnly(True)
+
+        self.label_break = QLabel('...................................')
 
         self.label_issue = QLabel('login issue? ')
         self.button_tag_phone = QPushButton('phone')
@@ -48,19 +61,33 @@ class Labeller(QDialog):
         layout.addWidget(self.button_check, 0, 0)
         layout.addWidget(self.label_check_result, 0, 1)
         # layout.addWidget(self.edit_check_result, 0, 1)
-        layout.addWidget(self.button_package_1, 1, 0)
-        layout.addWidget(self.edit_package_1_result, 1, 1)
-        layout.addWidget(self.button_package_2, 2, 0)
-        layout.addWidget(self.edit_package_2_result, 2, 1)
-        layout.addWidget(self.button_location, 3, 0)
-        layout.addWidget(self.edit_location_result, 3, 1)
-        layout.addWidget(self.button_location_o, 4, 0)
-        layout.addWidget(self.button_save, 6, 0)
-        layout.addWidget(self.label_issue, 7, 0)
-        layout.addWidget(self.button_tag_phone, 8, 0)
-        layout.addWidget(self.button_tag_tv, 8, 1)
-        layout.addWidget(button_close, 9, 1)
 
+        layout.addWidget(self.label_emulator_1, 1, 1)
+        layout.addWidget(self.label_emulator_2, 1, 2)
+
+        layout.addWidget(self.button_package_1, 2, 0)
+        layout.addWidget(self.edit_package_1_result, 2, 1)
+        # layout.addWidget(self.button_package_2, 2, 0)
+        layout.addWidget(self.edit_package_2_result, 2, 2)
+
+        layout.addWidget(self.label_activity_1, 6, 1)
+        layout.addWidget(self.label_activity_2, 6, 2)
+
+        layout.addWidget(self.button_save, 7, 0)
+        layout.addWidget(self.edit_activity_1_result, 7, 1)
+        layout.addWidget(self.edit_activity_2_result, 7, 2)
+
+        layout.addWidget(self.label_break, 8, 0)
+
+        layout.addWidget(self.label_issue, 9, 0)
+        layout.addWidget(self.button_tag_phone, 9, 1)
+        layout.addWidget(self.button_tag_tv, 9, 2)
+
+        layout.addWidget(self.button_location, 10, 0)
+        layout.addWidget(self.edit_location_result, 10, 1)
+
+        layout.addWidget(self.button_location_o, 10, 2)
+        layout.addWidget(button_close, 11, 2)
 
         self.setLayout(layout)
         self.setWindowTitle('GUI Labeller')
@@ -71,13 +98,14 @@ class Labeller(QDialog):
         self.button_check.clicked.connect(self.check_device)
 
         # https://blog.csdn.net/flhsxyz/article/details/79220936
-        self.button_package_1.clicked.connect(lambda: self.check_package(1))
-        self.button_package_2.clicked.connect(lambda: self.check_package(2))
+        self.button_package_1.clicked.connect(self.check_package)
+        # self.button_package_2.clicked.connect(lambda: self.check_package(2, True, True))
 
         self.button_location.clicked.connect(self.browse_file)
 
         self.button_location_o.clicked.connect(self.open_file)
 
+        self.button_save.clicked.connect(self.check_package)
         self.button_save.clicked.connect(self.save_gui)
 
         self.button_tag_phone.clicked.connect(lambda: self.tag('phone'))
@@ -105,30 +133,38 @@ class Labeller(QDialog):
                 # print(dev_2)
         print(dev)
 
-    def check_package(self, number):
-        cmd = str()
-        if len(dev) == 1:
-            cmd = 'adb shell dumpsys window windows | find "mCurrentFocus"'
-        elif len(dev) >= 2:
-            if number == 1:
-                cmd = 'adb -s ' + dev[0] + ' shell dumpsys window windows | find "mCurrentFocus"'
-                print(cmd)
-            if number == 2:
-                cmd = 'adb -s ' + dev[1] + ' shell dumpsys window windows | find "mCurrentFocus"'
-                print(cmd)
+    def check_package(self):
+        cmd_list = []
+        global dev
+        if len(dev) > 0:
+            cmd_list.append('adb -s ' + dev[0] + ' shell dumpsys window windows | find "mCurrentFocus"')
+            print(cmd_list[0])
+            cmd_list.append('adb -s ' + dev[1] + ' shell dumpsys window windows | find "mCurrentFocus"')
+            print(cmd_list[1])
 
-        r = str(subprocess.check_output(cmd,shell=True))
-        package_details = r.split(" ")[-1].split("/")
         global package_name
-        package_name = package_details[0]
-        activity_name = package_details[-1][0:-1]
-        if number == 1:
-            self.edit_package_1_result.setText(str(package_name))
-        elif number == 2:
-            self.edit_package_2_result.setText(str(package_name))
+        global activity_name
+
+        package_name.clear()
+        activity_name.clear()
+
+        index = 0
+        for cmd in cmd_list:
+            r = str(subprocess.check_output(cmd, shell=True))
+            print(r)
+            package_details = r.split(" ")[-1].split("/")
+            package_name.append(package_details[0])
+            activity_name.append(package_details[-1][:-6].split(".")[-1])
+            if index == 0:
+                self.edit_package_1_result.setText(str(package_name[0]))
+                self.edit_activity_1_result.setText(str(activity_name[0]))
+            elif index == 1:
+                self.edit_package_2_result.setText(str(package_name[1]))
+                self.edit_activity_2_result.setText(str(activity_name[1]))
+            index += 1
 
     def browse_file(self):
-        # global save_dir #一定要加上这个，否则save_dir全局变量无法赋值
+        # global save_dir
         # https://stackoverflow.com/questions/4286036/how-to-have-a-directory-dialog
         save_dir = QDir.toNativeSeparators(str(QFileDialog.getExistingDirectory(self, "Select Directory")))
         print(save_dir)
@@ -139,13 +175,19 @@ class Labeller(QDialog):
         save_dir = self.edit_location_result.text()
         os.startfile(save_dir)
 
-
     def save_gui(self):
+
         global save_file
         # global package_name
         package_name_1 = self.edit_package_1_result.text()
         package_name_2 = self.edit_package_2_result.text()
+        activity_name_1 = self.edit_activity_1_result.text()
+        activity_name_2 = self.edit_activity_2_result.text()
+
         save_file = self.edit_location_result.text() + "\\" + package_name_1
+        if package_name_1 != package_name_2:
+            save_file = save_file + "_" + package_name_2
+
         # https://stackoverflow.com/questions/273192/how-can-i-safely-create-a-nested-directory
         Path(save_file).mkdir(parents=True, exist_ok=True)
 
@@ -160,17 +202,17 @@ class Labeller(QDialog):
         Path(save_file).mkdir(parents=True, exist_ok=True)
 
         cmd = []
-        if len(dev) == 1:
-            cmd_1 = 'adb exec-out screencap -p > ' + save_file + '\\screen1_' + package_name_1 + '.png'
-            cmd_2 = 'adb exec-out uiautomator dump /dev/tty > ' + save_file + '\\screen1_' + package_name_1 + '.xml'
-            cmd.extend([cmd_1, cmd_2])
+        # if len(dev) == 1:
+        #     cmd_1 = 'adb exec-out screencap -p > ' + save_file + '\\screen_1_' + package_name_1 + '.png'
+        #     cmd_2 = 'adb exec-out uiautomator dump /dev/tty > ' + save_file + '\\screen_1_' + package_name_1 + '.xml'
+        #     cmd.extend([cmd_1, cmd_2])
         if len(dev) == 2:
             cmd_0_0 = "adb -s " + dev[0]
             cmd_0_1 = "adb -s " + dev[1]
-            cmd_1 = cmd_0_0 + ' exec-out screencap -p > ' + save_file + '\\screen1_' + package_name_1 + '.png'
-            cmd_2 = cmd_0_0 + ' exec-out uiautomator dump /dev/tty > ' + save_file + '\\screen1_' + package_name_1 + '.xml'
-            cmd_3 = cmd_0_1 + ' exec-out screencap -p > ' + save_file + '\\screen2_' + package_name_2 + '.png'
-            cmd_4 = cmd_0_1 + ' exec-out uiautomator dump /dev/tty > ' + save_file + '\\screen2_' + package_name_2 + '.xml'
+            cmd_1 = cmd_0_0 + ' exec-out screencap -p > ' + save_file + '\\screen_1_' + package_name_1 + '_' + activity_name_1 + '.png'
+            cmd_2 = cmd_0_0 + ' exec-out uiautomator dump /dev/tty > ' + save_file + '\\screen_1_' + package_name_1 + '_' + activity_name_1 + '.xml'
+            cmd_3 = cmd_0_1 + ' exec-out screencap -p > ' + save_file + '\\screen_2_' + package_name_2 + '_' + activity_name_2 +  '.png'
+            cmd_4 = cmd_0_1 + ' exec-out uiautomator dump /dev/tty > ' + save_file + '\\screen_2_' + package_name_2 + '_' + activity_name_2 + '.xml'
             cmd.extend([cmd_1, cmd_2, cmd_3, cmd_4])
 
         print(cmd)
