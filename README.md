@@ -40,8 +40,10 @@ A desktop app to label the GUIs from two Android emulators.
     4. (Optional) Click **Save Location** button to specify the path to save GUI files.
         - A default path has been displayed.
     5. Click ***Get n Save*** button to save the screenshot and description files of GUIs.
+        - When the complete message pops up, the GUI files is successfully saved.
         - the default path: [save location]/[package name]/[foler]/......
     6. Repeat step 2 and 5 to label to save more GUI files.
         - If there are some login issues, record the issue by clicking ***phone*** and/or ***tv*** button to specify the app. 
+         - When the complete message pops up, the issued is successfully recorded.
     
 
