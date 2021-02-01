@@ -41,10 +41,10 @@ class Labeller(QDialog):
         self.edit_apk_result = QLineEdit(apk_path)
         self.button_apk_o = QPushButton('Open location')
 
-        self.button_apk_list = QPushButton('Check APK')
+        self.button_apk_list = QPushButton('2. Check APK')
         self.label_apk_list = QLabel('......')
 
-        self.button_next = QPushButton('Next App')
+        self.button_next = QPushButton('3. Next App')
         self.label_package = QLabel('......')
         self.button_last = QPushButton('Last App')
 
@@ -55,7 +55,7 @@ class Labeller(QDialog):
         self.label_emulator_1 = QLabel('Emulator 1')
         self.label_emulator_2 = QLabel('Emulator 2')
 
-        self.button_package_1 = QPushButton('2. Check Packages: ')
+        self.button_package_1 = QPushButton('4. Check Packages: ')
         self.edit_package_1_result = QLineEdit('...')
         self.edit_package_1_result.setReadOnly(True)
         # self.button_package_2 = QPushButton('3. Check Name 2')
@@ -112,7 +112,11 @@ class Labeller(QDialog):
         layout.addWidget(self.button_open, 6, 1)
         layout.addWidget(self.button_uninstall, 6, 2)
 
-        layout.addWidget(self.label_break_1, 12, 0)
+        layout.addWidget(self.label_break_1, 10, 0)
+
+        layout.addWidget(self.button_location, 11, 0)
+        layout.addWidget(self.edit_location_result, 11, 1)
+        layout.addWidget(self.button_location_o, 11, 2)
 
         layout.addWidget(self.label_emulator_1, 13, 1)
         layout.addWidget(self.label_emulator_2, 13, 2)
@@ -137,10 +141,6 @@ class Labeller(QDialog):
 
         layout.addWidget(self.label_issue_layout, 19, 0)
         layout.addWidget(self.button_tag_layout, 19, 1)
-
-        layout.addWidget(self.button_location, 20, 0)
-        layout.addWidget(self.edit_location_result, 20, 1)
-        layout.addWidget(self.button_location_o, 20, 2)
 
         layout.addWidget(button_close, 21, 2)
 
