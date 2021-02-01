@@ -65,6 +65,8 @@ A desktop app to label the GUIs from two Android emulators (phone and tv).
 
 13. When the test is complete, click **Uninstall Apps** button to uninstall the apps. It will reduce the compatiblity issue when install the second paired apps.
 
-14. Wants to test another paired apps? --> return to step 5.
-    Wants to exit? --> Click **Close** button.
+14. Wants to test another paired apps? 
+    - return to step 5.
+15. Wants to exit? 
+    - Click **Close** button.
 
