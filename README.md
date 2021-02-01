@@ -34,6 +34,7 @@ A desktop app to label the GUIs from two Android emulators (phone and tv).
 1. Click **Check Emulators** button. 
     - Make sure the names of two emulators are displayed.
 2. Click the drop-down list the specify the phone and tv emulators.
+    - Cannot identify them? Click **Check Packages** button to display the package and activity names of two emulators.
 3. Click **Apk Location** button to specify the root path of apk files.
     - For each paired apk, the file structure should be:
         - ./[package_name]/mobile/[apk_name].apk

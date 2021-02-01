@@ -286,7 +286,8 @@ class Labeller(QDialog):
             print(r)
             package_details = r.split(" ")[-1].split("/")
             package_name.append(package_details[0])
-            activity_name.append(package_details[-1][:-6].split(".")[-1])
+            # activity_name.append(package_details[-1][:-6].split(".")[-1]) #short activity name
+            activity_name.append(package_details[-1][:-6]) # full activity name
             if index == 0:
                 self.edit_package_1_result.setText(str(package_name[0]))
                 self.edit_activity_1_result.setText(str(activity_name[0]))
