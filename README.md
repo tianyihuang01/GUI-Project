@@ -1,6 +1,6 @@
 # GUI-Project
 
-Updated on 01/02/2021
+Updated on 08/02/2021
 
 ## GUI Labbeller
 
@@ -8,14 +8,18 @@ Updated on 01/02/2021
 
 A desktop app to label the GUIs from two Android emulators (phone and tv).
 
+### Update
+
+08/02/2021: The app has been tested on real devices.
+
 ### Prerequiste
 
 1. `Python 3.x`
 2. `PyQt 5`
     - Instruction： <https://www.riverbankcomputing.com/software/pyqt/download>
     - Reference Guide: <https://www.riverbankcomputing.com/static/Docs/PyQt5/>
-3. `Andorid Emulator`
-    - the following tools have been tested:
+3. `Andorid Emulator` or ***real Android device***
+    - For Android Emulator, the following tools have been tested:
         - Genymotion: <https://www.genymotion.com/fun-zone/>
         - Android Studio (Recommend): <https://developer.android.com/studio>
 4. (Optional) `IDE for Python`
@@ -26,7 +30,7 @@ A desktop app to label the GUIs from two Android emulators (phone and tv).
     - At least two .apk files of the apps you want to analyze.
     - Exact two emulators (Android phone and tv) connected to your host machine via adb.
 
-2. Emulator configuations:
+2. Emulator (or real device) configuations:
     - Turn on the **developer options** > **USB debugging**
 
 ### Run `GUILabeller.py`
