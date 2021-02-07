@@ -240,11 +240,11 @@ class Labeller(QDialog):
         print(apk_path_tv)
         cmd_list = []
         if em_1 == 'phone':
-            cmd_list.append('adb -s ' + dev[0] + ' install ' + apk_path_mobile)
-            cmd_list.append('adb -s ' + dev[1] + ' install ' + apk_path_tv)
+            cmd_list.append('adb -s ' + dev[0] + ' install -r ' + apk_path_mobile)
+            cmd_list.append('adb -s ' + dev[1] + ' install -r ' + apk_path_tv)
         else:
-            cmd_list.append('adb -s ' + dev[0] + ' install ' + apk_path_tv)
-            cmd_list.append('adb -s ' + dev[1] + ' install ' + apk_path_mobile)
+            cmd_list.append('adb -s ' + dev[0] + ' install -r ' + apk_path_tv)
+            cmd_list.append('adb -s ' + dev[1] + ' install -r ' + apk_path_mobile)
         for cmd in cmd_list:
             r = str(subprocess.check_output(cmd, shell=True))
         QMessageBox.information(self, 'Complete', 'Installed')
